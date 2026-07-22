@@ -22,10 +22,10 @@ class HolidayList(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.setup.doctype.holiday.holiday import Holiday
 		from frappe.types import DF
 
-		from erpnext.setup.doctype.holiday.holiday import Holiday
-
+		base_location: DF.Link | None
 		color: DF.Color | None
 		country: DF.Autocomplete | None
 		from_date: DF.Date
@@ -35,9 +35,8 @@ class HolidayList(Document):
 		subdivision: DF.Autocomplete | None
 		to_date: DF.Date
 		total_holidays: DF.Int
-		weekly_off: DF.Literal[
-			"", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-		]
+		unit: DF.Link | None
+		weekly_off: DF.Literal["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 	# end: auto-generated types
 
 	def validate(self):

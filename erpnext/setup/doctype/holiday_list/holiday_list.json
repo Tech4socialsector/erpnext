@@ -22,6 +22,9 @@
   "country",
   "subdivision",
   "get_local_holidays",
+  "column_break_pyef",
+  "unit",
+  "base_location",
   "holidays_section",
   "holidays",
   "clear_table",
@@ -148,12 +151,28 @@
    "fieldname": "is_half_day",
    "fieldtype": "Check",
    "label": "Is Half Day"
+  },
+  {
+   "fieldname": "column_break_pyef",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "Unit"
+  },
+  {
+   "fieldname": "base_location",
+   "fieldtype": "Link",
+   "label": "Base Location",
+   "options": "Base Location"
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2026-04-14 18:21:08.018741",
+ "modified": "2026-07-22 14:43:47.088919",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Holiday List",
