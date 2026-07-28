@@ -23,8 +23,8 @@
   "subdivision",
   "get_local_holidays",
   "column_break_pyef",
-  "branch__unit",
-  "department__base_location",
+  "branch_base",
+  "department_unit",
   "holidays_section",
   "holidays",
   "clear_table",
@@ -157,22 +157,22 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "branch__unit",
+   "fieldname": "branch_base",
    "fieldtype": "Link",
-   "label": "Branch / Unit",
+   "label": "Branch / Base Location",
    "options": "Branch"
   },
   {
-   "fieldname": "department__base_location",
+   "fieldname": "department_unit",
    "fieldtype": "Link",
-   "label": "Department / Base Location",
+   "label": "Department / Unit",
    "options": "Department"
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2026-07-28 10:14:47.241735",
+ "modified": "2026-07-28 11:06:41.611868",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Holiday List",

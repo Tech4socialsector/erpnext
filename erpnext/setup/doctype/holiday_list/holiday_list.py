@@ -25,10 +25,10 @@ class HolidayList(Document):
 		from erpnext.setup.doctype.holiday.holiday import Holiday
 		from frappe.types import DF
 
-		branch__unit: DF.Link | None
+		branch_base: DF.Link | None
 		color: DF.Color | None
 		country: DF.Autocomplete | None
-		department__base_location: DF.Link | None
+		department_unit: DF.Link | None
 		from_date: DF.Date
 		holiday_list_name: DF.Data
 		holidays: DF.Table[Holiday]
