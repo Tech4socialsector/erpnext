@@ -25,9 +25,10 @@ class HolidayList(Document):
 		from erpnext.setup.doctype.holiday.holiday import Holiday
 		from frappe.types import DF
 
-		base_location: DF.Link | None
+		branch__unit: DF.Link | None
 		color: DF.Color | None
 		country: DF.Autocomplete | None
+		department__base_location: DF.Link | None
 		from_date: DF.Date
 		holiday_list_name: DF.Data
 		holidays: DF.Table[Holiday]
@@ -35,7 +36,6 @@ class HolidayList(Document):
 		subdivision: DF.Autocomplete | None
 		to_date: DF.Date
 		total_holidays: DF.Int
-		unit: DF.Link | None
 		weekly_off: DF.Literal["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 	# end: auto-generated types
 

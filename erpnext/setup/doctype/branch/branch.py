@@ -14,6 +14,7 @@ class Branch(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		address: DF.SmallText | None
 		branch: DF.Data
 	# end: auto-generated types
 
