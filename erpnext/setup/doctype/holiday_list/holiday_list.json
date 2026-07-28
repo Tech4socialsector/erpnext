@@ -23,8 +23,8 @@
   "subdivision",
   "get_local_holidays",
   "column_break_pyef",
-  "branch_base",
-  "department_unit",
+  "branches",
+  "departments",
   "holidays_section",
   "holidays",
   "clear_table",
@@ -157,16 +157,16 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "branch_base",
-   "fieldtype": "Link",
+   "fieldname": "branches",
+   "fieldtype": "Table MultiSelect",
    "label": "Branch / Base Location",
-   "options": "Branch"
+   "options": "Holiday List Branch"
   },
   {
-   "fieldname": "department_unit",
-   "fieldtype": "Link",
+   "fieldname": "departments",
+   "fieldtype": "Table MultiSelect",
    "label": "Department / Unit",
-   "options": "Department"
+   "options": "Holiday List Department"
   }
  ],
  "icon": "fa fa-calendar",

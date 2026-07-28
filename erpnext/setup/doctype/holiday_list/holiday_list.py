@@ -23,12 +23,14 @@ class HolidayList(Document):
 
 	if TYPE_CHECKING:
 		from erpnext.setup.doctype.holiday.holiday import Holiday
+		from erpnext.setup.doctype.holiday_list_branch.holiday_list_branch import HolidayListBranch
+		from erpnext.setup.doctype.holiday_list_department.holiday_list_department import HolidayListDepartment
 		from frappe.types import DF
 
-		branch_base: DF.Link | None
+		branches: DF.TableMultiSelect[HolidayListBranch]
 		color: DF.Color | None
 		country: DF.Autocomplete | None
-		department_unit: DF.Link | None
+		departments: DF.TableMultiSelect[HolidayListDepartment]
 		from_date: DF.Date
 		holiday_list_name: DF.Data
 		holidays: DF.Table[Holiday]
