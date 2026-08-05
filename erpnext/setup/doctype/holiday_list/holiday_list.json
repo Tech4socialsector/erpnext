@@ -15,6 +15,7 @@
   "total_holidays",
   "add_weekly_holidays",
   "weekly_off",
+  "weekly_off_occurrences",
   "get_weekly_off_dates",
   "column_break_euok",
   "is_half_day",
@@ -82,6 +83,13 @@
    "options": "\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday",
    "print_hide": 1,
    "report_hide": 1
+  },
+  {
+   "description": "Leave empty to add every occurrence of the selected weekly off day (uses the Is Half Day checkbox above). Add rows here to add only specific occurrences (e.g. Second, Fourth) — each row can have its own Is Half Day setting, so 2nd/4th Saturday can be half day while others stay full day, or vice versa.",
+   "fieldname": "weekly_off_occurrences",
+   "fieldtype": "Table",
+   "label": "Occurrences (optional)",
+   "options": "Holiday List Weekly Off Occurrence"
   },
   {
    "fieldname": "get_weekly_off_dates",

@@ -25,6 +25,9 @@ class HolidayList(Document):
 		from erpnext.setup.doctype.holiday.holiday import Holiday
 		from erpnext.setup.doctype.holiday_list_branch.holiday_list_branch import HolidayListBranch
 		from erpnext.setup.doctype.holiday_list_department.holiday_list_department import HolidayListDepartment
+		from erpnext.setup.doctype.holiday_list_weekly_off_occurrence.holiday_list_weekly_off_occurrence import (
+			HolidayListWeeklyOffOccurrence,
+		)
 		from frappe.types import DF
 
 		branches: DF.TableMultiSelect[HolidayListBranch]
@@ -39,6 +42,7 @@ class HolidayList(Document):
 		to_date: DF.Date
 		total_holidays: DF.Int
 		weekly_off: DF.Literal["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+		weekly_off_occurrences: DF.Table[HolidayListWeeklyOffOccurrence]
 	# end: auto-generated types
 
 	def validate(self):
@@ -53,20 +57,40 @@ class HolidayList(Document):
 			throw(_("Please select weekly off day"))
 
 		existing_holidays = self.get_holidays()
+		all_dates = self.get_weekly_off_date_list(self.from_date, self.to_date)
 
-		for d in self.get_weekly_off_date_list(self.from_date, self.to_date):
-			if d in existing_holidays:
-				continue
+		if self.weekly_off_occurrences:
+			# only add the dates matching the selected occurrences, each with its own half day setting
+			for row in self.weekly_off_occurrences:
+				for d in all_dates:
+					if d in existing_holidays or not self.matches_occurrence(d, row.occurrence):
+						continue
 
-			self.append(
-				"holidays",
-				{
-					"description": _(self.weekly_off),
-					"holiday_date": d,
-					"weekly_off": 1,
-					"is_half_day": self.is_half_day,
-				},
-			)
+					self.append(
+						"holidays",
+						{
+							"description": _(self.weekly_off),
+							"holiday_date": d,
+							"weekly_off": 1,
+							"is_half_day": row.is_half_day,
+						},
+					)
+					existing_holidays.append(d)
+		else:
+			# no occurrence filter selected, add every occurrence of the weekly off day
+			for d in all_dates:
+				if d in existing_holidays:
+					continue
+
+				self.append(
+					"holidays",
+					{
+						"description": _(self.weekly_off),
+						"holiday_date": d,
+						"weekly_off": 1,
+						"is_half_day": self.is_half_day,
+					},
+				)
 
 	@frappe.whitelist()
 	def get_supported_countries(self):
@@ -150,6 +174,24 @@ class HolidayList(Document):
 			reference_date += timedelta(days=7)
 
 		return date_list
+
+	def matches_occurrence(self, reference_date, occurrence: str | None) -> bool:
+		"""Checks if reference_date is the given occurrence (First/Second/Third/Fourth/Last) of its month."""
+		if not occurrence:
+			return True
+
+		from datetime import timedelta
+
+		occurrence_by_week_number = {1: "First", 2: "Second", 3: "Third", 4: "Fourth"}
+		week_number = (reference_date.day - 1) // 7 + 1
+
+		if occurrence_by_week_number.get(week_number) == occurrence:
+			return True
+
+		if occurrence == "Last" and (reference_date + timedelta(days=7)).month != reference_date.month:
+			return True
+
+		return False
 
 	@frappe.whitelist()
 	def clear_table(self):
